@@ -108,6 +108,17 @@ def load_enhanced_design():
             color: #D4AF37 !important;
             border-radius: 50% !important;
         }}
+        
+        /* Ocultar textos indesejados do Streamlit no topo */
+        header[data-testid="stHeader"] {{
+            background-color: rgba(255, 255, 255, 0) !important;
+            color: rgba(255, 255, 255, 0) !important;
+        }}
+        
+        /* Garantir que o botão de fechar a gaveta seja visível e elegante */
+        [data-testid="stSidebarNav"] button {{
+            color: #D4AF37 !important;
+        }}
         </style>
     """, unsafe_allow_html=True)
 
