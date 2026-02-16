@@ -23,8 +23,8 @@ if 'agenda_confirmada' not in st.session_state:
         {"data": hoje.strftime("%Y-%m-%d"), "hora": "14:00"},
     ]
 
-# ================= FUNDO COM LOGO ORIGINAL =================
-def carregar_estilo_original(img_path):
+# ================= DESIGN E CORREÇÃO DE UI (BOTÕES E CONTRASTE) =================
+def carregar_estilo_corrigido(img_path):
     encoded = ""
     if os.path.exists(img_path):
         with open(img_path, "rb") as f:
@@ -42,22 +42,45 @@ def carregar_estilo_original(img_path):
             background-attachment: fixed;
         }}
         
-        /* Overlay Suave para Legibilidade sem Alterar Cores */
+        /* Overlay Suave para Legibilidade */
         .stApp > div:first-child {{
-            background-color: rgba(255, 255, 255, 0.92) !important;
+            background-color: rgba(255, 255, 255, 0.94) !important;
         }}
 
-        /* Melhorar Contraste dos Botões sem Mudar Estilo */
+        /* CORREÇÃO DOS BOTÕES: Fundo Claro, Letras Pretas (Alto Contraste) */
         .stButton > button {{
             width: 100% !important;
-            border: 2px solid #1A1A1A !important;
             background-color: #FFFFFF !important;
-            color: #1A1A1A !important;
-            font-weight: bold !important;
-            transition: 0.3s !important;
+            color: #000000 !important;
+            border: 2px solid #000000 !important;
+            padding: 0.75rem 1.5rem !important;
+            border-radius: 8px !important;
+            font-weight: 800 !important;
+            text-transform: uppercase !important;
+            letter-spacing: 1px !important;
+            transition: all 0.3s ease !important;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
         }}
+        
         .stButton > button:hover {{
-            background-color: #1A1A1A !important;
+            background-color: #000000 !important;
+            color: #FFFFFF !important;
+            border-color: #000000 !important;
+        }}
+
+        /* Inputs e Selects com Alto Contraste */
+        input, select, .stSelectbox div {{
+            background-color: #FFFFFF !important;
+            color: #000000 !important;
+            border: 1px solid #000000 !important;
+        }}
+
+        /* Sidebar Estilizada */
+        [data-testid="stSidebar"] {{
+            background-color: #000000 !important;
+            border-right: 2px solid #D4AF37 !important;
+        }}
+        [data-testid="stSidebar"] * {{
             color: #FFFFFF !important;
         }}
 
@@ -67,12 +90,13 @@ def carregar_estilo_original(img_path):
         
         /* Limpeza de Header */
         header[data-testid="stHeader"] {{ background: transparent !important; }}
+        header[data-testid="stHeader"] * {{ color: transparent !important; font-size: 0 !important; }}
         </style>
         """,
         unsafe_allow_html=True
     )
 
-carregar_estilo_original("logo.png")
+carregar_estilo_corrigido("logo.png")
 
 # ================= DADOS ORIGINAIS =================
 USUARIO_ADMIN = "LUCIENE"
@@ -119,13 +143,15 @@ def gerar_resposta(problema):
 """
 
 # ================= NAVEGAÇÃO =================
-st.sidebar.title("Lu Bezerra Terapia Capilar")
+st.sidebar.markdown("<h2 style='color: #FFFFFF; text-align: center;'>Lu Bezerra</h2>", unsafe_allow_html=True)
+st.sidebar.markdown("<p style='color: #D4AF37; text-align: center; font-size: 0.8rem;'>TERAPIA CAPILAR</p>", unsafe_allow_html=True)
+st.sidebar.divider()
 pagina = st.sidebar.radio("Navegação", ["Cliente", "Agenda do Salão", "Área de Estudo", "Área Profissional"])
 
-# ================= PÁGINA: CLIENTE (ORIGINAL) =================
+# ================= PÁGINA: CLIENTE =================
 if pagina == "Cliente":
-    st.markdown("<h1>💆‍♀️ Terapia Capilar Especializada</h1>", unsafe_allow_html=True)
-    st.markdown("**Cuidado avançado para couro cabeludo e fios.**")
+    st.markdown("<h1 style='text-align: center;'>Lu Bezerra Terapia Capilar</h1>", unsafe_allow_html=True)
+    st.markdown("<p style='text-align: center;'>Cuidado avançado para couro cabeludo e fios.</p>", unsafe_allow_html=True)
 
     st.divider()
 
@@ -148,7 +174,7 @@ if pagina == "Cliente":
 
 # ================= PÁGINA: AGENDA DO SALÃO =================
 elif pagina == "Agenda do Salão":
-    st.title("📅 Agenda Lu Bezerra Terapia Capilar")
+    st.markdown("<h1>📅 Agenda Lu Bezerra Terapia Capilar</h1>", unsafe_allow_html=True)
     st.write("Consulte os horários e solicite seu agendamento.")
     
     col1, col2 = st.columns([1, 1.5])
@@ -183,7 +209,7 @@ elif pagina == "Agenda do Salão":
 
 # ================= PÁGINA: ÁREA DE ESTUDO =================
 elif pagina == "Área de Estudo":
-    st.title("🔬 Central de Estudos e Conhecimento")
+    st.markdown("<h1>🔬 Central de Estudos e Conhecimento</h1>", unsafe_allow_html=True)
     st.write("Conteúdo técnico sobre saúde capilar.")
     
     st.markdown("""
@@ -197,7 +223,7 @@ elif pagina == "Área de Estudo":
     
     st.info("Esta área é dedicada ao aprimoramento técnico e educação dos clientes.")
 
-# ================= PÁGINA: ÁREA PROFISSIONAL (ORIGINAL) =================
+# ================= PÁGINA: ÁREA PROFISSIONAL =================
 elif pagina == "Área Profissional":
     if "logado" not in st.session_state:
         st.session_state.logado = False
