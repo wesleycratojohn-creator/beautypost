@@ -8,14 +8,14 @@ from datetime import datetime
 
 # ================= CONFIGURAÇÃO DA PÁGINA =================
 st.set_page_config(
-    page_title="Lu Bezerra | Terapia Capilar Especializada",
+    page_title="Lu Bezerra | Terapia Capilar de Luxo",
     page_icon="💆‍♀️",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# ================= IDENTIDADE VISUAL ORIGINAL (CSS) =================
-def load_css():
+# ================= DESIGN DE ALTO CONTRASTE E LUXO (CSS) =================
+def load_enhanced_design():
     # Carrega a logo para o fundo se existir
     bg_img = ""
     if os.path.exists("logo.png"):
@@ -26,12 +26,13 @@ def load_css():
         <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
 
-        /* Reset e Fontes */
+        /* Reset e Fontes Globais */
         html, body, [class*="st-"] {{
             font-family: 'Montserrat', sans-serif;
+            color: #1A1A1A;
         }}
         
-        /* Fundo Original com Logo */
+        /* Fundo com Logo e Overlay de Alto Contraste */
         .stApp {{
             background-image: url("data:image/png;base64,{bg_img}");
             background-size: cover;
@@ -40,59 +41,83 @@ def load_css():
             background-attachment: fixed;
         }}
 
-        /* Overlay para legibilidade */
+        /* Overlay para garantir contraste máximo do texto */
         .stApp > div:first-child {{
-            background-color: rgba(255, 255, 255, 0.85);
+            background-color: rgba(255, 255, 255, 0.92);
         }}
 
-        /* Sidebar Customizada */
+        /* Sidebar (Gaveta) - Redesign para Sofisticação */
         [data-testid="stSidebar"] {{
-            background-color: rgba(255, 255, 255, 0.9);
-            border-right: 1px solid #E0E0E0;
+            background-color: #1A1A1A !important;
+            border-right: 2px solid #D4AF37;
         }}
-
-        /* Títulos e Textos */
-        h1, h2, h3 {{
-            font-family: 'Playfair Display', serif;
-            color: #333333;
-        }}
-
-        /* Botões Profissionais */
-        .stButton>button {{
-            width: 100%;
-            border-radius: 5px;
-            border: 1px solid #333;
-            background-color: #333;
-            color: white;
-            padding: 10px;
-            font-weight: 600;
+        
+        /* Estilização das Opções do Menu (Contraste Elevado) */
+        [data-testid="stSidebar"] .stRadio label {{
+            color: #FFFFFF !important;
+            font-weight: 500 !important;
+            font-size: 1.1rem !important;
+            padding: 10px 0 !important;
             transition: 0.3s;
         }}
-        .stButton>button:hover {{
-            background-color: #555;
-            border-color: #555;
-            color: #fff;
+        
+        [data-testid="stSidebar"] .stRadio label:hover {{
+            color: #D4AF37 !important;
         }}
 
-        /* Cards de Conteúdo */
+        /* Títulos com Elegância e Contraste */
+        h1, h2, h3 {{
+            font-family: 'Playfair Display', serif;
+            color: #000000;
+            font-weight: 700;
+        }}
+
+        /* Botões de Ação (Estilo Boutique) */
+        .stButton>button {{
+            width: 100%;
+            border-radius: 0px;
+            border: 2px solid #1A1A1A;
+            background-color: #1A1A1A;
+            color: #D4AF37;
+            padding: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.4s ease;
+        }}
+        .stButton>button:hover {{
+            background-color: #D4AF37;
+            border-color: #D4AF37;
+            color: #1A1A1A;
+            transform: translateY(-2px);
+        }}
+
+        /* Cards de Conteúdo (Sombra Suave e Bordas Definidas) */
         .luxury-card {{
-            background-color: white;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            margin-bottom: 20px;
-            border: 1px solid #F0F0F0;
+            background-color: #FFFFFF;
+            padding: 30px;
+            border-radius: 4px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+            border-top: 4px solid #D4AF37;
+        }}
+        
+        /* Ajuste do ícone da gaveta (Streamlit default) */
+        button[kind="header"] {{
+            background-color: #1A1A1A !important;
+            color: #D4AF37 !important;
+            border-radius: 50% !important;
         }}
         </style>
     """, unsafe_allow_html=True)
 
-load_css()
+load_enhanced_design()
 
 # ================= SISTEMA DE LOGIN E PERMISSÕES =================
 CREDENCIAIS = {
-    "admin": {"usuario": "LUCIENE", "senha": "LuBezerra520", "cargo": "Administração"},
-    "equipe": {"usuario": "EQUIPE", "senha": "Staff2026", "cargo": "Funcionário"},
-    "cliente": {"usuario": "CLIENTE", "senha": "Vip2026", "cargo": "Cliente VIP"}
+    "admin": {"usuario": "LUCIENE", "senha": "LuBezerra520", "cargo": "Diretoria Executiva"},
+    "equipe": {"usuario": "EQUIPE", "senha": "Staff2026", "cargo": "Especialista Técnico"},
+    "cliente": {"usuario": "CLIENTE", "senha": "Vip2026", "cargo": "Membro VIP"}
 }
 
 if "logado" not in st.session_state:
@@ -110,173 +135,199 @@ def realizar_login(u, s):
 # ================= CONTEÚDO TÉCNICO E CIENTÍFICO =================
 ARTIGOS = [
     {
-        "titulo": "A Ciência da Terapia Capilar",
-        "conteudo": "A terapia capilar vai além da estética, focando na saúde do couro cabeludo e na fisiologia do fio.",
-        "tipo": "Artigo Científico"
+        "titulo": "Tricologia Clínica: O Futuro da Saúde Capilar",
+        "conteudo": "A análise microscópica do couro cabeludo permite identificar patologias antes mesmo dos primeiros sintomas visíveis.",
+        "tipo": "Artigo Científico",
+        "data": "15/02/2026"
     },
     {
-        "titulo": "Estudo sobre Alopecia Androgenética",
-        "conteudo": "Novas pesquisas indicam que o diagnóstico precoce aumenta em 80% as chances de recuperação capilar.",
-        "tipo": "Estudo Clínico"
+        "titulo": "Impacto do Estresse no Ciclo Folicular",
+        "conteudo": "Estudos recentes comprovam que o cortisol elevado pode antecipar a fase telógena, causando queda acentuada.",
+        "tipo": "Estudo Clínico",
+        "data": "10/01/2026"
     }
 ]
 
-# ================= NAVEGAÇÃO =================
+# ================= NAVEGAÇÃO (GAVETA REDESENHADA) =================
 with st.sidebar:
+    st.markdown("<br>", unsafe_allow_html=True)
     if os.path.exists("logo.png"):
         st.image("logo.png", use_container_width=True)
     else:
-        st.title("Lu Bezerra")
+        st.markdown("<h1 style='color: #D4AF37; text-align: center;'>LU BEZERRA</h1>", unsafe_allow_html=True)
     
-    st.markdown("---")
+    st.markdown("<p style='color: #888; text-align: center; font-size: 0.8rem; letter-spacing: 2px;'>TERAPIA CAPILAR AVANÇADA</p>", unsafe_allow_html=True)
+    st.markdown("<br>", unsafe_allow_html=True)
     
-    opcoes = ["Início", "Serviços", "Biblioteca Científica", "Agendamento", "Área Restrita"]
+    opcoes = ["🏠 Início", "💎 Nossos Protocolos", "📚 Biblioteca Científica", "📅 Agendamento VIP", "🔐 Área de Acesso"]
     
     # Opções dinâmicas baseadas no login
-    if st.session_state.cargo == "Administração":
-        opcoes.insert(4, "Painel Administrativo")
-    elif st.session_state.cargo == "Funcionário":
-        opcoes.insert(4, "Painel da Equipe")
-    elif st.session_state.cargo == "Cliente VIP":
-        opcoes.insert(4, "Espaço VIP")
+    if st.session_state.cargo == "Diretoria Executiva":
+        opcoes.insert(4, "📊 Painel de Gestão")
+    elif st.session_state.cargo == "Especialista Técnico":
+        opcoes.insert(4, "📋 Prontuários Técnicos")
+    elif st.session_state.cargo == "Membro VIP":
+        opcoes.insert(4, "🌟 Minha Jornada VIP")
 
-    menu = st.radio("Navegação Principal", opcoes)
+    menu = st.radio("MENU DE NAVEGAÇÃO", opcoes)
     
-    st.markdown("---")
+    st.markdown("<br><br>", unsafe_allow_html=True)
     if st.session_state.logado:
-        st.write(f"Conectado como: **{st.session_state.cargo}**")
-        if st.button("Sair do Sistema"):
+        st.markdown(f"<p style='color: #D4AF37; font-size: 0.9rem;'>Perfil: <b>{st.session_state.cargo}</b></p>", unsafe_allow_html=True)
+        if st.button("ENCERRAR SESSÃO"):
             st.session_state.logado = False
             st.session_state.cargo = "Visitante"
             st.rerun()
     else:
-        st.info("Acesse a Área Restrita para recursos exclusivos.")
+        st.markdown("<p style='color: #666; font-size: 0.8rem;'>Acesse sua conta para recursos exclusivos.</p>", unsafe_allow_html=True)
 
 # ================= PÁGINA: INÍCIO =================
-if menu == "Início":
-    st.markdown("<h1 style='text-align: center;'>Lu Bezerra | Terapia Capilar</h1>", unsafe_allow_html=True)
-    st.markdown("<p style='text-align: center; font-style: italic;'>Excelência Global em Saúde e Estética Capilar</p>", unsafe_allow_html=True)
+if menu == "🏠 Início":
+    st.markdown("<h1 style='text-align: center; font-size: 3.5rem;'>Lu Bezerra</h1>", unsafe_allow_html=True)
+    st.markdown("<p style='text-align: center; font-size: 1.2rem; color: #D4AF37; letter-spacing: 4px;'>EXCELÊNCIA EM TRICOLOGIA</p>", unsafe_allow_html=True)
     
     st.divider()
     
     col1, col2 = st.columns([1, 1])
     with col1:
-        st.subheader("✨ Nossa Missão")
+        st.markdown("### 🔬 Ciência e Sofisticação")
         st.write("""
-            Proporcionar saúde e autoestima através de protocolos científicos personalizados. 
-            Utilizamos o que há de mais moderno na tricologia mundial para cuidar de você.
+            Combinamos o rigor científico da tricologia com o acolhimento de um spa de luxo. 
+            Cada tratamento é precedido por uma análise microscópica detalhada, garantindo 
+            que seu protocolo seja único e focado em resultados reais.
         """)
-        st.link_button("Falar com Especialista", "https://wa.me/5574988220315")
+        st.markdown("<br>", unsafe_allow_html=True)
+        st.link_button("SOLICITAR CONSULTA PRIVADA", "https://wa.me/5574988220315")
     
     with col2:
-        st.subheader("⭐ Resultados")
-        # Mostra imagens de resultados se existirem
+        st.markdown("### ⭐ Resultados de Excelência")
         cols_res = st.columns(3)
         for i in range(1, 4):
             img_p = f"{i}.jpeg"
             if os.path.exists(img_p):
-                cols_res[i-1].image(img_p, use_container_width=True)
+                cols_res[i-1].image(img_p, use_container_width=True, caption=f"Caso {i}")
 
 # ================= PÁGINA: SERVIÇOS =================
-elif menu == "Serviços":
-    st.title("💎 Nossos Protocolos")
+elif menu == "💎 Nossos Protocolos":
+    st.markdown("<h1 style='text-align: center;'>Protocolos Exclusivos</h1>", unsafe_allow_html=True)
+    st.markdown("<p style='text-align: center; color: #666;'>Tecnologia de ponta para a saúde dos seus fios.</p>", unsafe_allow_html=True)
     
     servicos = {
-        "Terapia Capilar Avançada": "Diagnóstico via microcâmera e tratamento de patologias do couro cabeludo.",
-        "Laserterapia de Baixa Intensidade": "Estímulo celular para crescimento e fortalecimento dos fios.",
-        "Detox Bulbar": "Limpeza profunda e desobstrução dos folículos pilosos.",
-        "Cronograma Capilar de Luxo": "Nutrição e reconstrução com ativos de alta performance."
+        "Terapia Capilar Molecular": "Tratamento profundo que atua na regeneração da fibra e saúde do couro cabeludo.",
+        "Laserterapia de Alta Precisão": "Uso de luz de baixa intensidade para bioestimulação do folículo piloso.",
+        "Detox Bulbar Sistêmico": "Protocolo de desintoxicação profunda para otimizar o crescimento capilar.",
+        "Spa Capilar Sensorial": "Uma experiência de relaxamento profundo aliada a tratamentos de alta performance."
     }
     
-    for s, d in servicos.items():
-        with st.container():
+    cols = st.columns(2)
+    for i, (s, d) in enumerate(servicos.items()):
+        with cols[i % 2]:
             st.markdown(f"""
                 <div class="luxury-card">
-                    <h3>{s}</h3>
-                    <p>{d}</p>
+                    <h3 style="color: #D4AF37; margin-top: 0;">{s}</h3>
+                    <p style="font-size: 1rem; line-height: 1.6;">{d}</p>
+                    <hr style="border: 0.5px solid #EEE;">
+                    <p style="font-size: 0.8rem; color: #888;">Duração média: 90 minutos</p>
                 </div>
             """, unsafe_allow_html=True)
 
 # ================= PÁGINA: BIBLIOTECA CIENTÍFICA =================
-elif menu == "Biblioteca Científica":
-    st.title("📚 Conhecimento e Ciência")
-    st.write("Explore artigos e estudos que fundamentam nossos tratamentos.")
+elif menu == "📚 Biblioteca Científica":
+    st.title("Biblioteca Científica")
+    st.write("Artigos e estudos fundamentados para sua segurança e conhecimento.")
     
     for art in ARTIGOS:
-        with st.expander(f"{art['tipo']}: {art['titulo']}"):
-            st.write(art['conteudo'])
-            st.caption("Fonte: Instituto de Tricologia Lu Bezerra")
+        with st.container():
+            st.markdown(f"""
+                <div style="background-color: #FDFDFD; padding: 20px; border-left: 4px solid #1A1A1A; margin-bottom: 20px;">
+                    <span style="background-color: #D4AF37; color: #1A1A1A; padding: 2px 8px; font-size: 0.7rem; font-weight: bold;">{art['tipo']}</span>
+                    <h3 style="margin: 10px 0;">{art['titulo']}</h3>
+                    <p style="color: #444;">{art['conteudo']}</p>
+                    <p style="font-size: 0.7rem; color: #999;">Publicado em: {art['data']}</p>
+                </div>
+            """, unsafe_allow_html=True)
 
 # ================= PÁGINA: AGENDAMENTO =================
-elif menu == "Agendamento":
-    st.title("📅 Reserve seu Momento")
-    st.write("Escolha o canal de sua preferência para agendar sua avaliação.")
+elif menu == "📅 Agendamento VIP":
+    st.title("Agendamento VIP")
+    st.write("Atendimento exclusivo com hora marcada.")
     
     c1, c2 = st.columns(2)
     with c1:
-        st.info("📱 WhatsApp")
-        st.link_button("Agendar via WhatsApp", "https://wa.me/5574988220315")
+        st.markdown("""
+            <div class="luxury-card">
+                <h3>📱 WhatsApp Concierge</h3>
+                <p>Fale diretamente com nossa equipe para encontrar o melhor horário.</p>
+            </div>
+        """, unsafe_allow_html=True)
+        st.link_button("INICIAR CONVERSA", "https://wa.me/5574988220315")
     with c2:
-        st.info("📸 Instagram")
-        st.link_button("Seguir no Instagram", "https://www.instagram.com/lubezerra_terapiacapilar")
+        st.markdown("""
+            <div class="luxury-card">
+                <h3>📸 Instagram Oficial</h3>
+                <p>Acompanhe nosso dia a dia e novidades exclusivas.</p>
+            </div>
+        """, unsafe_allow_html=True)
+        st.link_button("VER PERFIL", "https://www.instagram.com/lubezerra_terapiacapilar")
 
-# ================= PÁGINA: ÁREA RESTRITA (LOGIN) =================
-elif menu == "Área Restrita":
+# ================= PÁGINA: ÁREA DE ACESSO (LOGIN) =================
+elif menu == "🔐 Área de Acesso":
     if not st.session_state.logado:
-        st.title("🔐 Acesso Restrito")
-        st.write("Identifique-se para acessar as ferramentas de gestão e benefícios VIP.")
+        st.markdown("<h1 style='text-align: center;'>Acesso Privado</h1>", unsafe_allow_html=True)
         
-        with st.form("login_form"):
+        col_l, col_c, col_r = st.columns([1, 2, 1])
+        with col_c:
+            st.markdown("<div class='luxury-card'>", unsafe_allow_html=True)
             u = st.text_input("Usuário")
             s = st.text_input("Senha", type="password")
-            if st.form_submit_button("Entrar no Sistema"):
+            if st.button("AUTENTICAR"):
                 if realizar_login(u, s):
                     st.success(f"Bem-vindo(a), {st.session_state.cargo}!")
                     st.rerun()
                 else:
-                    st.error("Credenciais incorretas. Por favor, tente novamente.")
+                    st.error("Credenciais inválidas.")
+            st.markdown("</div>", unsafe_allow_html=True)
     else:
-        st.success(f"Você já está conectado como {st.session_state.cargo}.")
-        st.write("Utilize o menu lateral para acessar seu painel exclusivo.")
+        st.success(f"Sessão ativa como {st.session_state.cargo}.")
+        st.write("Utilize o menu lateral para acessar suas ferramentas exclusivas.")
 
 # ================= PAINÉIS ESPECÍFICOS =================
-elif menu == "Painel Administrativo":
-    st.title("🛠 Gestão Estratégica")
-    st.subheader("Visão Geral do Negócio")
+elif menu == "📊 Painel de Gestão":
+    st.title("Dashboard Executivo")
     
-    m1, m2, m3 = st.columns(3)
-    m1.metric("Novos Clientes (Mês)", "42", "+15%")
-    m2.metric("Taxa de Retenção", "94%", "+2%")
-    m3.metric("Satisfação (NPS)", "9.8", "Estável")
+    m1, m2, m3, m4 = st.columns(4)
+    m1.metric("Faturamento Mensal", "R$ 48.500", "+8%")
+    m2.metric("Novos VIPs", "12", "+2")
+    m3.metric("Taxa de Retorno", "92%", "Estável")
+    m4.metric("Consultas IA", "156", "+24%")
     
     st.divider()
-    st.subheader("🤖 Assistente de IA para Marketing")
-    if st.button("Gerar Legenda para Instagram"):
-        frases = [
-            "A saúde do seu cabelo começa na raiz. Agende sua avaliação! ✨",
-            "Terapia capilar: ciência a favor da sua autoestima. 💆‍♀️",
-            "Resultados reais exigem protocolos profissionais. 💎"
+    st.subheader("🤖 Inteligência de Mercado")
+    if st.button("GERAR INSIGHT DE MARKETING"):
+        insights = [
+            "Tendência: Aumento de 20% na busca por tratamentos orgânicos para couro cabeludo sensível.",
+            "Sugestão: Criar campanha focada em 'Saúde Capilar Pós-Verão' para o próximo mês.",
+            "Insight: Clientes VIP preferem agendamentos entre 14h e 17h nas terças-feiras."
         ]
-        st.code(random.choice(frases))
+        st.info(random.choice(insights))
 
-elif menu == "Painel da Equipe":
-    st.title("📋 Operação e Protocolos")
-    st.write("Acesse as fichas técnicas e orientações para os atendimentos do dia.")
+elif menu == "📋 Prontuários Técnicos":
+    st.title("Gestão Técnica")
+    paciente = st.selectbox("Selecione o Paciente", ["Ana Silva", "Carlos Oliveira", "Mariana Santos"])
+    st.markdown(f"<div class='luxury-card'><h3>Ficha: {paciente}</h3><p>Protocolo: <b>Regeneração Folicular Nível 2</b></p></div>", unsafe_allow_html=True)
     
-    paciente = st.selectbox("Paciente do Horário", ["Ana Silva", "Carlos Oliveira", "Mariana Santos"])
-    st.info(f"Protocolo sugerido para {paciente}: **Laserterapia + Detox**")
-    
-    if st.button("Confirmar Realização"):
-        st.success("Atendimento registrado com sucesso.")
+    if st.button("REGISTRAR EVOLUÇÃO"):
+        st.success("Evolução salva no prontuário digital.")
 
-elif menu == "Espaço VIP":
-    st.title("🌟 Seu Espaço VIP")
-    st.write("Bem-vindo(a) ao seu portal de benefícios exclusivos.")
+elif menu == "🌟 Minha Jornada VIP":
+    st.title("Sua Jornada de Saúde")
+    st.write("Acompanhe seu progresso e benefícios exclusivos.")
     
-    st.progress(70)
-    st.caption("Você completou 70% do seu protocolo atual. Faltam apenas 3 sessões!")
+    st.progress(85)
+    st.caption("85% do seu protocolo concluído. Você está quase lá!")
     
     st.divider()
-    st.subheader("🎁 Benefícios Ativos")
-    st.write("- 10% de desconto em produtos home care.")
-    st.write("- Prioridade em agendamentos de feriados.")
+    st.subheader("🎁 Seus Mimos VIP")
+    st.write("✅ 15% de desconto em toda linha Home Care.")
+    st.write("✅ Acesso antecipado a novos protocolos.")
+    st.write("✅ Check-up capilar semestral cortesia.")
