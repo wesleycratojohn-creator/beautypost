@@ -156,11 +156,15 @@ if pagina == "Cliente":
     st.divider()
 
     st.subheader("⭐ O que nossos clientes dizem")
-    cols = st.columns(5)
+    
+    # Restaurando todas as fotos de feedback
     imagens = ["1.jpeg", "2.jpeg", "3.jpeg", "4.jpeg", "5.jpeg"]
-
-    for col, img in zip(cols, imagens):
-        if os.path.exists(img):
+    
+    # Criar colunas para as imagens existentes
+    imgs_existentes = [img for img in imagens if os.path.exists(img)]
+    if imgs_existentes:
+        cols = st.columns(len(imgs_existentes))
+        for col, img in zip(cols, imgs_existentes):
             col.image(Image.open(img), use_container_width=True)
 
     st.divider()
