@@ -111,8 +111,23 @@ def load_enhanced_design():
         
         /* Ocultar textos indesejados do Streamlit no topo */
         header[data-testid="stHeader"] {{
-            background-color: rgba(255, 255, 255, 0) !important;
-            color: rgba(255, 255, 255, 0) !important;
+            visibility: hidden !important;
+            display: none !important;
+        }}
+        
+        /* Esconder especificamente qualquer texto que possa vazar do ícone da sidebar */
+        [data-testid="stSidebarNav"] {{
+            padding-top: 2rem !important;
+        }}
+        
+        /* Remover o texto 'double_arrow_right' caso ele seja injetado via pseudo-elemento ou texto direto */
+        * {{
+            text-rendering: optimizeLegibility;
+        }}
+        
+        /* Forçar a remoção de qualquer conteúdo de texto no topo que não seja o app */
+        #root > div:nth-child(1) > div > div > div > header {{
+            display: none !important;
         }}
         
         /* Garantir que o botão de fechar a gaveta seja visível e elegante */
