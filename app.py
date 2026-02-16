@@ -109,25 +109,37 @@ def load_enhanced_design():
             border-radius: 50% !important;
         }}
         
-        /* Ocultar textos indesejados do Streamlit no topo */
+        /* Ocultar apenas o fundo e textos do header, mantendo os botões interativos */
         header[data-testid="stHeader"] {{
-            visibility: hidden !important;
-            display: none !important;
+            background-color: rgba(0,0,0,0) !important;
+            color: rgba(0,0,0,0) !important;
         }}
         
-        /* Esconder especificamente qualquer texto que possa vazar do ícone da sidebar */
-        [data-testid="stSidebarNav"] {{
-            padding-top: 2rem !important;
+        /* Esconder especificamente o texto indesejado sem afetar os ícones */
+        header[data-testid="stHeader"] * {{
+            color: transparent !important;
+            font-size: 0 !important;
         }}
         
-        /* Remover o texto 'double_arrow_right' caso ele seja injetado via pseudo-elemento ou texto direto */
-        * {{
-            text-rendering: optimizeLegibility;
+        /* Restaurar e estilizar o botão da sidebar (ícone de menu) */
+        header[data-testid="stHeader"] button {{
+            visibility: visible !important;
+            color: #D4AF37 !important; /* Cor dourada para o ícone */
+            background-color: #1A1A1A !important; /* Fundo escuro para contraste */
+            border-radius: 50% !important;
+            width: 45px !important;
+            height: 45px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
         }}
         
-        /* Forçar a remoção de qualquer conteúdo de texto no topo que não seja o app */
-        #root > div:nth-child(1) > div > div > div > header {{
-            display: none !important;
+        /* Garantir que o ícone dentro do botão seja visível */
+        header[data-testid="stHeader"] button svg {{
+            fill: #D4AF37 !important;
+            width: 25px !important;
+            height: 25px !important;
+            visibility: visible !important;
         }}
         
         /* Garantir que o botão de fechar a gaveta seja visível e elegante */
