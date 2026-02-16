@@ -8,280 +8,275 @@ from datetime import datetime
 
 # ================= CONFIGURAÇÃO DA PÁGINA =================
 st.set_page_config(
-    page_title="Lu Bezerra | Global Trichology & Luxury Spa",
-    page_icon="💎",
+    page_title="Lu Bezerra | Terapia Capilar Especializada",
+    page_icon="💆‍♀️",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# ================= ESTILIZAÇÃO CSS ULTRA-SOFISTICADA =================
-def local_css():
-    st.markdown("""
+# ================= IDENTIDADE VISUAL ORIGINAL (CSS) =================
+def load_css():
+    # Carrega a logo para o fundo se existir
+    bg_img = ""
+    if os.path.exists("logo.png"):
+        with open("logo.png", "rb") as f:
+            bg_img = base64.b64encode(f.read()).decode()
+
+    st.markdown(f"""
         <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@200;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
 
-        /* Reset e Fontes Globais */
-        html, body, [class*="st-"] {
+        /* Reset e Fontes */
+        html, body, [class*="st-"] {{
             font-family: 'Montserrat', sans-serif;
-            color: #2C2C2C;
-        }
-        h1, h2, h3, .luxury-title {
-            font-family: 'Cinzel', serif;
-            letter-spacing: 2px;
-            color: #1A1A1A;
-        }
-        .italic-subtitle {
-            font-family: 'Playfair Display', serif;
-            font-style: italic;
-            color: #8C7355;
-        }
-
-        /* Background e Container */
-        .stApp {
-            background-color: #FFFFFF;
-        }
-
-        /* Sidebar Elegante */
-        [data-testid="stSidebar"] {
-            background-color: #0F0F0F;
-            color: #FFFFFF;
-            border-right: 1px solid #2C2C2C;
-        }
-        [data-testid="stSidebar"] .stRadio label {
-            color: #D4AF37 !important;
-            font-weight: 200;
-        }
-
-        /* Botões de Luxo */
-        .stButton>button {
-            background-color: #1A1A1A;
-            color: #D4AF37;
-            border: 1px solid #D4AF37;
-            border-radius: 0px;
-            padding: 0.8rem 2.5rem;
-            text-transform: uppercase;
-            font-size: 0.8rem;
-            letter-spacing: 2px;
-            transition: all 0.4s ease;
-        }
-        .stButton>button:hover {
-            background-color: #D4AF37;
-            color: #1A1A1A;
-            border: 1px solid #1A1A1A;
-        }
-
-        /* Cards de Artigos e Estudos */
-        .article-card {
-            background-color: #F9F9F9;
-            padding: 30px;
-            border-left: 5px solid #D4AF37;
-            margin-bottom: 20px;
-            transition: all 0.3s;
-        }
-        .article-card:hover {
-            background-color: #F0F0F0;
-            box-shadow: 10px 10px 20px rgba(0,0,0,0.05);
-        }
-
-        /* Banner Global */
-        .global-hero {
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1560066984-138dadb4c035?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+        }}
+        
+        /* Fundo Original com Logo */
+        .stApp {{
+            background-image: url("data:image/png;base64,{bg_img}");
             background-size: cover;
             background-position: center;
-            padding: 120px 40px;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }}
+
+        /* Overlay para legibilidade */
+        .stApp > div:first-child {{
+            background-color: rgba(255, 255, 255, 0.85);
+        }}
+
+        /* Sidebar Customizada */
+        [data-testid="stSidebar"] {{
+            background-color: rgba(255, 255, 255, 0.9);
+            border-right: 1px solid #E0E0E0;
+        }}
+
+        /* Títulos e Textos */
+        h1, h2, h3 {{
+            font-family: 'Playfair Display', serif;
+            color: #333333;
+        }}
+
+        /* Botões Profissionais */
+        .stButton>button {{
+            width: 100%;
+            border-radius: 5px;
+            border: 1px solid #333;
+            background-color: #333;
             color: white;
-            text-align: center;
-            margin-bottom: 50px;
-        }
+            padding: 10px;
+            font-weight: 600;
+            transition: 0.3s;
+        }}
+        .stButton>button:hover {{
+            background-color: #555;
+            border-color: #555;
+            color: #fff;
+        }}
+
+        /* Cards de Conteúdo */
+        .luxury-card {{
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+            border: 1px solid #F0F0F0;
+        }}
         </style>
     """, unsafe_allow_html=True)
 
-local_css()
+load_css()
 
-# ================= SISTEMA DE AUTENTICAÇÃO =================
-# Em um sistema real, usaríamos um banco de dados. Aqui simulamos a estrutura.
+# ================= SISTEMA DE LOGIN E PERMISSÕES =================
 CREDENCIAIS = {
-    "admin": {"user": "LUCIENE", "pass": "LuBezerra520", "role": "Diretoria"},
-    "staff": {"user": "EQUIPE", "pass": "Staff2026", "role": "Especialista"},
-    "client": {"user": "CLIENTE", "pass": "Vip2026", "role": "Membro VIP"}
+    "admin": {"usuario": "LUCIENE", "senha": "LuBezerra520", "cargo": "Administração"},
+    "equipe": {"usuario": "EQUIPE", "senha": "Staff2026", "cargo": "Funcionário"},
+    "cliente": {"usuario": "CLIENTE", "senha": "Vip2026", "cargo": "Cliente VIP"}
 }
 
-def check_login(u, p):
-    for role, cred in CREDENCIAIS.items():
-        if u == cred["user"] and p == cred["pass"]:
-            return cred["role"]
-    return None
+if "logado" not in st.session_state:
+    st.session_state.logado = False
+    st.session_state.cargo = "Visitante"
 
-# ================= CONTEÚDO CIENTÍFICO (ARTIGOS & ESTUDOS) =================
-ARTIGOS_CIENTIFICOS = [
+def realizar_login(u, s):
+    for role, cred in CREDENCIAIS.items():
+        if u == cred["usuario"] and s == cred["senha"]:
+            st.session_state.logado = True
+            st.session_state.cargo = cred["cargo"]
+            return True
+    return False
+
+# ================= CONTEÚDO TÉCNICO E CIENTÍFICO =================
+ARTIGOS = [
     {
-        "titulo": "Avanços na Fotobioestimulação Capilar",
-        "autor": "Dr. Alessandro Silva",
-        "resumo": "Estudo sobre a eficácia do Laser de Baixa Intensidade (LLLT) na regeneração do folículo piloso.",
-        "categoria": "Estudo Clínico"
+        "titulo": "A Ciência da Terapia Capilar",
+        "conteudo": "A terapia capilar vai além da estética, focando na saúde do couro cabeludo e na fisiologia do fio.",
+        "tipo": "Artigo Científico"
     },
     {
-        "titulo": "Microbioma do Couro Cabeludo e Alopecia",
-        "autor": "Dra. Elena Rossi",
-        "resumo": "Análise da disbiose capilar e sua relação direta com processos inflamatórios crônicos.",
-        "categoria": "Pesquisa Científica"
-    },
-    {
-        "titulo": "Nutracêuticos na Terapia Capilar Moderna",
-        "autor": "Prof. Jean-Louis",
-        "resumo": "Como a suplementação direcionada potencializa os resultados dos tratamentos tópicos.",
-        "categoria": "Artigo Técnico"
+        "titulo": "Estudo sobre Alopecia Androgenética",
+        "conteudo": "Novas pesquisas indicam que o diagnóstico precoce aumenta em 80% as chances de recuperação capilar.",
+        "tipo": "Estudo Clínico"
     }
 ]
 
-# ================= NAVEGAÇÃO PRINCIPAL =================
+# ================= NAVEGAÇÃO =================
 with st.sidebar:
-    st.markdown("<h1 style='color: #D4AF37; text-align: center;'>LU BEZERRA</h1>", unsafe_allow_html=True)
-    st.markdown("<p style='text-align: center; font-size: 0.7rem; letter-spacing: 3px;'>GLOBAL TRICHOLOGY</p>", unsafe_allow_html=True)
+    if os.path.exists("logo.png"):
+        st.image("logo.png", use_container_width=True)
+    else:
+        st.title("Lu Bezerra")
+    
     st.markdown("---")
     
-    if "user_role" not in st.session_state:
-        st.session_state.user_role = "Visitante"
-
-    menu_options = ["The Experience", "Scientific Library", "Global Services", "Portal de Acesso"]
+    opcoes = ["Início", "Serviços", "Biblioteca Científica", "Agendamento", "Área Restrita"]
     
-    # Adiciona opções extras baseadas no cargo
-    if st.session_state.user_role == "Diretoria":
-        menu_options.insert(3, "Admin Dashboard")
-    elif st.session_state.user_role == "Especialista":
-        menu_options.insert(3, "Staff Panel")
-    elif st.session_state.user_role == "Membro VIP":
-        menu_options.insert(3, "My VIP Journey")
+    # Opções dinâmicas baseadas no login
+    if st.session_state.cargo == "Administração":
+        opcoes.insert(4, "Painel Administrativo")
+    elif st.session_state.cargo == "Funcionário":
+        opcoes.insert(4, "Painel da Equipe")
+    elif st.session_state.cargo == "Cliente VIP":
+        opcoes.insert(4, "Espaço VIP")
 
-    menu = st.radio("SELECT DESTINATION", menu_options)
+    menu = st.radio("Navegação Principal", opcoes)
+    
     st.markdown("---")
-    st.caption(f"Status: {st.session_state.user_role}")
-    if st.session_state.user_role != "Visitante":
-        if st.button("LOGOUT"):
-            st.session_state.user_role = "Visitante"
+    if st.session_state.logado:
+        st.write(f"Conectado como: **{st.session_state.cargo}**")
+        if st.button("Sair do Sistema"):
+            st.session_state.logado = False
+            st.session_state.cargo = "Visitante"
             st.rerun()
+    else:
+        st.info("Acesse a Área Restrita para recursos exclusivos.")
 
-# ================= PÁGINA: THE EXPERIENCE (HOME) =================
-if menu == "The Experience":
-    st.markdown("""
-        <div class="global-hero">
-            <h1 style="font-size: 4rem; color: #D4AF37;">The Art of Trichology</h1>
-            <p class="italic-subtitle" style="font-size: 1.5rem; color: #F5F5F5;">Where Science Meets Luxury</p>
-            <p style="max-width: 800px; margin: 30px auto; font-weight: 200; line-height: 1.8;">
-                Welcome to the global standard of hair health. Led by Luciene Bezerra, our institute combines 
-                cutting-edge clinical research with the most sophisticated spa experience in the world.
-            </p>
-        </div>
-    """, unsafe_allow_html=True)
-
-    c1, c2, c3 = st.columns(3)
-    with c1:
-        st.markdown("### 🔬 Science")
-        st.write("Evidence-based protocols developed through international clinical studies.")
-    with c2:
-        st.markdown("### 💎 Luxury")
-        st.write("An environment designed for total sensory immersion and absolute privacy.")
-    with c3:
-        st.markdown("### 🌍 Global")
-        st.write("Techniques and technologies sourced from the world's leading hair research centers.")
-
-# ================= PÁGINA: SCIENTIFIC LIBRARY =================
-elif menu == "Scientific Library":
-    st.markdown("<h1 class='luxury-title'>Scientific Library</h1>", unsafe_allow_html=True)
-    st.markdown("<p class='italic-subtitle'>Knowledge is the foundation of excellence.</p>", unsafe_allow_html=True)
+# ================= PÁGINA: INÍCIO =================
+if menu == "Início":
+    st.markdown("<h1 style='text-align: center;'>Lu Bezerra | Terapia Capilar</h1>", unsafe_allow_html=True)
+    st.markdown("<p style='text-align: center; font-style: italic;'>Excelência Global em Saúde e Estética Capilar</p>", unsafe_allow_html=True)
     
     st.divider()
     
-    search = st.text_input("Search Clinical Studies...")
+    col1, col2 = st.columns([1, 1])
+    with col1:
+        st.subheader("✨ Nossa Missão")
+        st.write("""
+            Proporcionar saúde e autoestima através de protocolos científicos personalizados. 
+            Utilizamos o que há de mais moderno na tricologia mundial para cuidar de você.
+        """)
+        st.link_button("Falar com Especialista", "https://wa.me/5574988220315")
     
-    for art in ARTIGOS_CIENTIFICOS:
-        if search.lower() in art["titulo"].lower() or search == "":
+    with col2:
+        st.subheader("⭐ Resultados")
+        # Mostra imagens de resultados se existirem
+        cols_res = st.columns(3)
+        for i in range(1, 4):
+            img_p = f"{i}.jpeg"
+            if os.path.exists(img_p):
+                cols_res[i-1].image(img_p, use_container_width=True)
+
+# ================= PÁGINA: SERVIÇOS =================
+elif menu == "Serviços":
+    st.title("💎 Nossos Protocolos")
+    
+    servicos = {
+        "Terapia Capilar Avançada": "Diagnóstico via microcâmera e tratamento de patologias do couro cabeludo.",
+        "Laserterapia de Baixa Intensidade": "Estímulo celular para crescimento e fortalecimento dos fios.",
+        "Detox Bulbar": "Limpeza profunda e desobstrução dos folículos pilosos.",
+        "Cronograma Capilar de Luxo": "Nutrição e reconstrução com ativos de alta performance."
+    }
+    
+    for s, d in servicos.items():
+        with st.container():
             st.markdown(f"""
-                <div class="article-card">
-                    <span style="color: #D4AF37; font-size: 0.7rem; font-weight: bold;">{art['categoria']}</span>
-                    <h3 style="margin: 10px 0;">{art['titulo']}</h3>
-                    <p style="font-size: 0.9rem; color: #666;">By {art['autor']}</p>
-                    <p style="margin-top: 15px;">{art['resumo']}</p>
-                    <a href="#" style="color: #1A1A1A; font-weight: bold; text-decoration: none; font-size: 0.8rem;">READ FULL STUDY →</a>
+                <div class="luxury-card">
+                    <h3>{s}</h3>
+                    <p>{d}</p>
                 </div>
             """, unsafe_allow_html=True)
 
-# ================= PÁGINA: PORTAL DE ACESSO =================
-elif menu == "Portal de Acesso":
-    if st.session_state.user_role == "Visitante":
-        st.markdown("<h1 class='luxury-title'>Private Access</h1>", unsafe_allow_html=True)
-        st.write("Please identify yourself to access your personalized dashboard.")
-        
-        with st.container():
-            col_l, col_r = st.columns([1, 1])
-            with col_l:
-                u = st.text_input("Username")
-                p = st.text_input("Password", type="password")
-                if st.button("AUTHENTICATE"):
-                    role = check_login(u, p)
-                    if role:
-                        st.session_state.user_role = role
-                        st.success(f"Welcome, {role}")
-                        st.rerun()
-                    else:
-                        st.error("Invalid Credentials")
-            with col_r:
-                st.info("Access levels: Administration, Staff, and VIP Clients. If you are a new client, please contact our concierge.")
-    else:
-        st.success(f"You are currently logged in as: {st.session_state.user_role}")
-        st.write("Use the sidebar to navigate to your exclusive panel.")
+# ================= PÁGINA: BIBLIOTECA CIENTÍFICA =================
+elif menu == "Biblioteca Científica":
+    st.title("📚 Conhecimento e Ciência")
+    st.write("Explore artigos e estudos que fundamentam nossos tratamentos.")
+    
+    for art in ARTIGOS:
+        with st.expander(f"{art['tipo']}: {art['titulo']}"):
+            st.write(art['conteudo'])
+            st.caption("Fonte: Instituto de Tricologia Lu Bezerra")
 
-# ================= PÁGINA: ADMIN DASHBOARD =================
-elif menu == "Admin Dashboard":
-    st.markdown("<h1 class='luxury-title'>Executive Dashboard</h1>", unsafe_allow_html=True)
+# ================= PÁGINA: AGENDAMENTO =================
+elif menu == "Agendamento":
+    st.title("📅 Reserve seu Momento")
+    st.write("Escolha o canal de sua preferência para agendar sua avaliação.")
+    
+    c1, c2 = st.columns(2)
+    with c1:
+        st.info("📱 WhatsApp")
+        st.link_button("Agendar via WhatsApp", "https://wa.me/5574988220315")
+    with c2:
+        st.info("📸 Instagram")
+        st.link_button("Seguir no Instagram", "https://www.instagram.com/lubezerra_terapiacapilar")
+
+# ================= PÁGINA: ÁREA RESTRITA (LOGIN) =================
+elif menu == "Área Restrita":
+    if not st.session_state.logado:
+        st.title("🔐 Acesso Restrito")
+        st.write("Identifique-se para acessar as ferramentas de gestão e benefícios VIP.")
+        
+        with st.form("login_form"):
+            u = st.text_input("Usuário")
+            s = st.text_input("Senha", type="password")
+            if st.form_submit_button("Entrar no Sistema"):
+                if realizar_login(u, s):
+                    st.success(f"Bem-vindo(a), {st.session_state.cargo}!")
+                    st.rerun()
+                else:
+                    st.error("Credenciais incorretas. Por favor, tente novamente.")
+    else:
+        st.success(f"Você já está conectado como {st.session_state.cargo}.")
+        st.write("Utilize o menu lateral para acessar seu painel exclusivo.")
+
+# ================= PAINÉIS ESPECÍFICOS =================
+elif menu == "Painel Administrativo":
+    st.title("🛠 Gestão Estratégica")
+    st.subheader("Visão Geral do Negócio")
     
     m1, m2, m3 = st.columns(3)
-    m1.metric("Global Revenue", "€ 142.500", "+12%")
-    m2.metric("VIP Retention", "98.4%", "+2.1%")
-    m3.metric("Clinical Success", "99.9%", "Stable")
+    m1.metric("Novos Clientes (Mês)", "42", "+15%")
+    m2.metric("Taxa de Retenção", "94%", "+2%")
+    m3.metric("Satisfação (NPS)", "9.8", "Estável")
     
     st.divider()
-    st.subheader("🤖 Strategic AI Assistant")
-    task = st.selectbox("AI Task", ["Market Trend Analysis", "Staff Performance Review", "Global Expansion Plan"])
-    if st.button("RUN ANALYSIS"):
-        st.write(f"Generating {task} report for Luciene Bezerra...")
-        st.progress(100)
-        st.success("Analysis Complete: 'The European market shows a 15% increase in demand for organic trichology.'")
+    st.subheader("🤖 Assistente de IA para Marketing")
+    if st.button("Gerar Legenda para Instagram"):
+        frases = [
+            "A saúde do seu cabelo começa na raiz. Agende sua avaliação! ✨",
+            "Terapia capilar: ciência a favor da sua autoestima. 💆‍♀️",
+            "Resultados reais exigem protocolos profissionais. 💎"
+        ]
+        st.code(random.choice(frases))
 
-# ================= PÁGINA: STAFF PANEL =================
-elif menu == "Staff Panel":
-    st.markdown("<h1 class='luxury-title'>Specialist Workspace</h1>", unsafe_allow_html=True)
-    st.subheader("Patient Protocols")
-    patient = st.selectbox("Select Patient", ["Sophia Müller", "James Aris", "Isabella Costa"])
-    st.write(f"Current Protocol for {patient}: **Intensive Follicular Regeneration**")
-    if st.button("Update Clinical Notes"):
-        st.toast("Notes saved to global database.")
-
-# ================= PÁGINA: MY VIP JOURNEY =================
-elif menu == "My VIP Journey":
-    st.markdown("<h1 class='luxury-title'>Your VIP Journey</h1>", unsafe_allow_html=True)
-    st.write("Welcome back. Your personalized treatment plan is active.")
+elif menu == "Painel da Equipe":
+    st.title("📋 Operação e Protocolos")
+    st.write("Acesse as fichas técnicas e orientações para os atendimentos do dia.")
     
-    st.progress(65)
-    st.caption("65% of your current protocol completed. Next session: Feb 20th.")
+    paciente = st.selectbox("Paciente do Horário", ["Ana Silva", "Carlos Oliveira", "Mariana Santos"])
+    st.info(f"Protocolo sugerido para {paciente}: **Laserterapia + Detox**")
+    
+    if st.button("Confirmar Realização"):
+        st.success("Atendimento registrado com sucesso.")
+
+elif menu == "Espaço VIP":
+    st.title("🌟 Seu Espaço VIP")
+    st.write("Bem-vindo(a) ao seu portal de benefícios exclusivos.")
+    
+    st.progress(70)
+    st.caption("Você completou 70% do seu protocolo atual. Faltam apenas 3 sessões!")
     
     st.divider()
-    st.subheader("Concierge Chat")
-    st.text_input("How can we assist you today?")
-    st.button("SEND TO CONCIERGE")
-
-# ================= PÁGINA: GLOBAL SERVICES =================
-elif menu == "Global Services":
-    st.markdown("<h1 class='luxury-title'>Our Expertise</h1>", unsafe_allow_html=True)
-    
-    services = {
-        "Molecular Trichology": "Deep analysis of hair health at a cellular level.",
-        "Scalp Detoxification": "Advanced purification using ozone and botanical extracts.",
-        "Laser Therapy": "High-precision light therapy for hair density restoration.",
-        "Luxury Hair Spa": "A sensory journey combining therapy and relaxation."
-    }
-    
-    for s, d in services.items():
-        with st.expander(s):
-            st.write(d)
-            st.button(f"Inquire about {s}", key=s)
+    st.subheader("🎁 Benefícios Ativos")
+    st.write("- 10% de desconto em produtos home care.")
+    st.write("- Prioridade em agendamentos de feriados.")
